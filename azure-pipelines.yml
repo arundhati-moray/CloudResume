@@ -9,7 +9,7 @@ trigger:
      - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: SelfHostedVM
 
 steps:
 - task: CopyFiles@2
