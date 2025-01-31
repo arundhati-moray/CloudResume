@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Arundhati Moray Resume</title>
+
+    </head>
+    <style>
+        h1{
+            color: White;
+            text-align: center;
+        }
+        body{
+            background-color:black;
+        }
+        p{
+            color: White;
+            text-align: center;
+            font-size: 50px;
+        }
+    </style>
+
+
+    <h1>Arundhati Moray</h1>
+
+    <body>
+
+    <p>This is my RESUME</p>
+
+    <p> visit counts: <span class = "counter">0</span></p>
+
+    <script>
+        let visitorCount = localStorage.getItem('visitorCount');
+        if(visitorCount === null)
+            {
+            visitorCount = 1; //first visit
+            }
+        else{
+            visitorCount = parseInt(visitorCount) + 1; 
+        }
+
+        localStorage.setItem('visitorCount', visitorCount);
+
+        //update the counter on the web page
+        document.querySelector(".counter").textContent = visitorCount;
+   
+    </script>
+
+    </body>
+</html>
