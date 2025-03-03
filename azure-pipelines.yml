@@ -1,0 +1,25 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+ branches:
+   include:
+     - main
+
+pool:
+  name: 'SelfHostedVM'
+
+steps:
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '.' #copy everything from the root folder
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStaggingDirectory)' #save it in a temprory directory before publishing as an artifact
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStaggingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
