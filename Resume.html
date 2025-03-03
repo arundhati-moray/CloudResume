@@ -27,23 +27,18 @@
 
     <p>This is my RESUME</p>
 
-    <p> visit counts: <span class = "counter">0</span></p>
+    <!--<p> id = "counter">Visitors: 0</p> -->
+    <p> Number of Visitors: <span class = "counter">0</span></p>
 
     <script>
-        let visitorCount = localStorage.getItem('visitorCount');
-        if(visitorCount === null)
-            {
-            visitorCount = 1; //first visit
-            }
-        else{
-            visitorCount = parseInt(visitorCount) + 1; 
-        }
-
-        localStorage.setItem('visitorCount', visitorCount);
-
-        //update the counter on the web page
-        document.querySelector(".counter").textContent = visitorCount;
-   
+       async function updateVisitorCount(){
+        const response = await fetch("http://localhost:7071/api/VisitorCountFunction");
+        const data = await response.json();
+        console.log("API Response:", data);
+        document.querySelector(".counter").textContent = data.visitCounts;
+    } 
+    window.onload = updateVisitorCount;
+      
     </script>
 
     </body>
