@@ -15,7 +15,7 @@ namespace CloudResume.Function
         private readonly string? _tableName = Environment.GetEnvironmentVariable("TableName");
 
         private static readonly string _partitionKey = "Counter";
-        private static readonly string _rowKey =  "Visits";
+        private static readonly string _rowKey = "Visits";
 
         public VisitorCountFunction(ILogger<VisitorCountFunction> logger)
         {
@@ -27,6 +27,11 @@ namespace CloudResume.Function
         {
 
             _logger.LogInformation("Connecting to the Cosmos DB Table API");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                return new BadRequestObjectResult("Missing CosmosDBConnectionString");
+            }
 
             //Initialize the table client for table api
             var tableClient = new TableClient(_connectionString, _tableName);
@@ -42,16 +47,16 @@ namespace CloudResume.Function
 
             //update the new count value to the table
             tableClient.UpsertEntity(entity);
-            
 
-            return new OkObjectResult( new{entity.VisitCounts});
+
+            return new OkObjectResult(new { entity.VisitCounts });
         }
 
-  public async Task<CounterEntity> GetCounterEntity(TableClient tableClient)
-        { 
+        public async Task<CounterEntity> GetCounterEntity(TableClient tableClient)
+        {
             try
             {
-               return await tableClient.GetEntityAsync<CounterEntity>( partitionKey: _partitionKey, rowKey: _rowKey);
+                return await tableClient.GetEntityAsync<CounterEntity>(partitionKey: _partitionKey, rowKey: _rowKey);
             }
             catch (RequestFailedException)
             {
@@ -65,7 +70,7 @@ namespace CloudResume.Function
                 await tableClient.AddEntityAsync(newEntity);
                 return newEntity;
             }
-            
+
         }
     }
 }
