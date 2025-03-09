@@ -25,6 +25,16 @@ namespace CloudResume.Function
         [Function("VisitorCountFunction")]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
+            if(string.IsNullOrEmpty(_connectionString))
+            {
+                _logger.LogError("CosmosDBConnectionString is missing");
+                return new BadRequestObjectResult("CosmosDBConnectionString is missing");
+            }
+            if(string.IsNullOrEmpty(_tableName))
+            {
+                _logger.LogError("TableName is missing");
+                return new BadRequestObjectResult("TableName is missing");
+            }
 
             _logger.LogInformation("Connecting to the Cosmos DB Table API");
 
