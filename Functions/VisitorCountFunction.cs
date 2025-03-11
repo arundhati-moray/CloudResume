@@ -62,6 +62,7 @@ namespace CloudResume.Function
             return new OkObjectResult(new { entity.VisitCounts });
         }
 
+        //Returns the current count of the visitors
         public async Task<CounterEntity> GetCounterEntity(TableClient tableClient)
         {
             try
