@@ -4,6 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
+
  branches:
    include:
      - main
@@ -12,6 +13,13 @@ pool:
   name: 'SelfHostedVM'
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Azure PayAsYouGo (90f2a80e-6934-46d8-9b29-95402af7c21c)'
+    command: 'test'
+    projects: '*/Functions.Tests.csproj'
+    testRunTitle: 'UnitTests'
+    requestTimeout: 3000
 - task: CopyFiles@2
   inputs:
     SourceFolder: '.' #copy everything from the root folder
