@@ -2,6 +2,7 @@
 using Azure;
 using Azure.Data.Tables;
 
+//Table entity class
 namespace CloudResume.Function
         {
             public class CounterEntity : ITableEntity
